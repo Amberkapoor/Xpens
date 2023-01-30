@@ -45,19 +45,34 @@ const showText = `Total: ${totalExpense}`
 headingEl.textContent = showText;
 const allExpensesHTML = allExpenses.map(expense => createListitem(expense));
 
-const joinAllExpensesHTML = allExpensesHTML.join("");
-expenseTableEl.innerHTML = joinAllExpensesHTML;
+const joinedAllExpensesHTML = allExpensesHTML.join("");
+expenseTableEl.innerHTML = joinedAllExpensesHTML;
 }
 const element = document.querySelector("#btnAddExpense");
 element.addEventListener("click", addExpenseToTotal, false);
 
 //Date Controller Elements
+//Get Date
 function getDateString(moment) {
      return moment.toLocaleDateString('en-US', {
         year: 'numeric', 
         month: 'long', 
         day: 'numeric',
     })
+}
+
+//Delete button work
+function deleteItem(dateValue) {
+    const newArr = [];
+    console.log('delete item was called', dateValue);
+    for (let i = 0; i < allExpenses.length; i++) {
+        if(allExpenses[i].moment.valueOf() !== dateValue){
+           newArr.push(allExpenses[i]);
+        }
+    }
+    const allExpensesHTML = newArr.map(expense => createListitem(expense));
+    const joinedAllExpensesHTML = allExpensesHTML.join("");
+    expenseTableEl.innerHTML = joinedAllExpensesHTML;
 }
 
 
@@ -73,7 +88,7 @@ function createListitem( { desc, amount, moment }){
                     <span class="px-5">
                     ${amount}
                     </span>
-                    <button type="button" class="btn btn-outline-danger btn-sm">
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteItem(${moment.valueOf})">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                     </div>

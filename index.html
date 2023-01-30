@@ -14,20 +14,20 @@
         <span class="navbar-brand mb-0 h1">Xpens</span>
         <span class="navbar-brand mb-0 h1" id="showTotal"></span>   
     </nav>
-    <div class="container-fluid bg-light" style="min-height: 100vh">
+    <div class="container-fluid bg-warning" style="min-height: 100vh">
         <div class="container">
             <div class="jumbotron mt-4">
 					<div class="input-group mb-3">
 						<input
 							type="text"
-							class="form-control"
+                            class="form-control"
                             id="inputAmount"
 							placeholder="Amount spent"
 							aria-label="Amount spent"
-							aria-describedby="spent in rupee"
+							aria-describedby="spent in dollar"
 						/>
 						<div class="input-group-append">
-							<span class="input-group-text" id="spent in rupee">$</span>
+							<span class="input-group-text" id="spent in dollar">$</span>
 						</div>
 					</div>
 					<div class="input-group mb-3">
@@ -41,7 +41,7 @@
 							placeholder="spent On"
 							aria-label="spent On"
 							aria-describedby="spent at"
-						/>
+                            />
 						<div class="input-group-append">
 							<button class="btn btn-outline-primary" type="button" id="btnAddExpense">Add</button>
 						</div>
@@ -49,20 +49,6 @@
 				</div>
                <div>
                 <ul class="list-group" id="expenseTable">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <div class="d-flex flex-column">
-                            Tshirt
-                            <small class="text-muted">March 11, 2019</small>
-                        </div>
-                        <div>
-                            <span class="px-5">
-                                500
-                            </span>
-                            <button type="button" class="btn btn-outline-danger btn-sm">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </li>
                 </ul>
                </div>
             </div>
