@@ -1,96 +1,87 @@
-//Show total on heading
-const headingEl = document.querySelector("#showTotal");
 
-//get reference to description element
+const headingEl = document.querySelector('#headingTotal');
 
-const inputDescription = document.querySelector("#inputDesc");
-const inputElement = document.querySelector("#inputAmount"); // refrence to input amount
-const expenseTableEl = document.querySelector("#expenseTable"); // ref to table
-//Read value
+
+const inputDescEl = document.querySelector('#inputDesc');
+
+
+const inputElement = document.querySelector('#inputAmount');
+
+
+const expenseTableEl = document.querySelector('#expenseTable');
+
+
 let totalExpense = 0;
 
-//show heading to totalExpense 
+
 headingEl.textContent = totalExpense;
+const allExpenses = [];
 
-//all data of expenses
-const allExpenses = []; 
+function addExpenseToTotal() {
+    const expenseItem = {};
 
+    const textAmount = inputElement.value;
 
-//button click
-function addExpenseToTotal()
-{
+    const textDesc = inputDescEl.value;
 
-const expenseItem = {};
+    const expense = parseInt(textAmount, 10);
 
-//read value
-const textAmount = inputElement.value;
+    expenseItem.desc = textDesc;
+    expenseItem.amount = expense;
+    expenseItem.moment = new Date();
 
-// read desc from input
-const textDesc = inputDescription.value;
+    allExpenses.push(expenseItem);
 
-//convert it from text to number
-const expense = parseInt(textAmount, 10);   
-// object
-expenseItem.desc = textDesc;
-expenseItem.amount = expense;
-expenseItem.moment = new Date();
+    totalExpense = totalExpense + expense;
 
-allExpenses.push(expenseItem);
+    
+    const someText = `Total: ${totalExpense}`;
+    headingEl.textContent = someText;
 
-// add value to totalExpense
-totalExpense = totalExpense + expense;
-
-const showText = `Total: ${totalExpense}`
-
-headingEl.textContent = showText;
-const allExpensesHTML = allExpenses.map(expense => createListitem(expense));
-
-const joinedAllExpensesHTML = allExpensesHTML.join("");
-expenseTableEl.innerHTML = joinedAllExpensesHTML;
+    renderList(allExpenses);
 }
-const element = document.querySelector("#btnAddExpense");
-element.addEventListener("click", addExpenseToTotal, false);
+const element = document.querySelector('#btnAddExpense');
 
-//Date Controller Elements
-//Get Date
-function getDateString(moment) {
-     return moment.toLocaleDateString('en-US', {
-        year: 'numeric', 
-        month: 'long', 
+element.addEventListener('click', addExpenseToTotal, false);
+
+function getDateString(momento) {
+    return momento.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
         day: 'numeric',
-    })
+    });
 }
 
-//Delete button work
 function deleteItem(dateValue) {
-    const newArr = [];
-    console.log('delete item was called', dateValue);
-    for (let i = 0; i < allExpenses.length; i++) {
-        if(allExpenses[i].moment.valueOf() !== dateValue){
-           newArr.push(allExpenses[i]);
-        }
-    }
-    const allExpensesHTML = newArr.map(expense => createListitem(expense));
-    const joinedAllExpensesHTML = allExpensesHTML.join("");
-    expenseTableEl.innerHTML = joinedAllExpensesHTML;
+    const newArr = allExpenses.filter(expense => expense.moment.valueOf() !== dateValue);
+    renderList(newArr);
 }
 
+function renderList(arrOfList) {
+    const allExpenseHTML = arrOfList.map(expense => createListItem(expense));
+    const joinedAllExpenseHTML = allExpenseHTML.join('');
+    expenseTableEl.innerHTML = joinedAllExpenseHTML;
+}
 
-//View Layer
-function createListitem( { desc, amount, moment }){
+function createListItem({ desc, amount, moment }) {
     return `
-    <li class="list-group-item d-flex justify-content-between">
-                    <div class="d-flex flex-column">
+        <li class="list-group-item d-flex justify-content-between">
+                <div class="d-flex flex-column">
                     ${desc}
-                        <small class="text-muted">${getDateString(moment)}</small>
-                    </div>
-                    <div>
+                    <small class="text-muted">${getDateString(moment)}</small>
+                </div>
+                <div>
                     <span class="px-5">
-                    ${amount}
+                        ${amount}
                     </span>
-                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteItem(${moment.valueOf})">
+                    <button 
+                        type="button" 
+                        class="btn btn-outline-danger btn-sm"
+                        onclick="deleteItem(${moment.valueOf()})"
+                        >
                         <i class="fas fa-trash-alt"></i>
                     </button>
-                    </div>
-						</li>`
+                </div>
+            </li>
+        `;
 }
