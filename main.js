@@ -42,15 +42,31 @@ totalExpense = totalExpense + expense;
 const showText = `Total: ${totalExpense}`
 
 headingEl.textContent = showText;
+const allExpensesHTML = allExpenses.map(expense => createListitem(expense)
+    );
 
-// show table
-const data1 = allExpenses[0];
-const data2 = allExpenses[1];
-
-const data1Text = `${data1.amount} :::${data1.desc}`;
-const data2Text = `${data2.amount} :::${data2.desc}`;
-
-expenseTableEl.innerHTML = data1Text + data2Text;
+const joinAllExpensesHTML = allExpensesHTML.join("");
+expenseTableEl.innerHTML = joinAllExpensesHTML;
 }
 const element = document.querySelector("#btnAddExpense");
 element.addEventListener("click", addExpenseToTotal, false);
+
+
+//View Layer
+function createListitem( { desc, amount }){
+    return `
+    <li class="list-group-item d-flex justify-content-between">
+                    <div class="d-flex flex-column">
+                    ${desc}
+                        <small class="text-muted">March 11, 2019</small>
+                    </div>
+                    <div>
+                    <span class="px-5">
+                    ${amount}
+                    </span>
+                    <button type="button" class="btn btn-outline-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                    </div>
+						</li>`
+}
