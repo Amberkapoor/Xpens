@@ -30,9 +30,10 @@ const textDesc = inputDescription.value;
 
 //convert it from text to number
 const expense = parseInt(textAmount, 10);   
-
+// object
 expenseItem.desc = textDesc;
-expenseItem.amount = textAmount;
+expenseItem.amount = expense;
+expenseItem.moment = new Date();
 
 allExpenses.push(expenseItem);
 
@@ -42,8 +43,7 @@ totalExpense = totalExpense + expense;
 const showText = `Total: ${totalExpense}`
 
 headingEl.textContent = showText;
-const allExpensesHTML = allExpenses.map(expense => createListitem(expense)
-    );
+const allExpensesHTML = allExpenses.map(expense => createListitem(expense));
 
 const joinAllExpensesHTML = allExpensesHTML.join("");
 expenseTableEl.innerHTML = joinAllExpensesHTML;
@@ -51,14 +51,23 @@ expenseTableEl.innerHTML = joinAllExpensesHTML;
 const element = document.querySelector("#btnAddExpense");
 element.addEventListener("click", addExpenseToTotal, false);
 
+//Date Controller Elements
+function getDateString(moment) {
+     return moment.toLocaleDateString('en-US', {
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+    })
+}
+
 
 //View Layer
-function createListitem( { desc, amount }){
+function createListitem( { desc, amount, moment }){
     return `
     <li class="list-group-item d-flex justify-content-between">
                     <div class="d-flex flex-column">
                     ${desc}
-                        <small class="text-muted">March 11, 2019</small>
+                        <small class="text-muted">${getDateString(moment)}</small>
                     </div>
                     <div>
                     <span class="px-5">
